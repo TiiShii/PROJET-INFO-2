@@ -140,6 +140,6 @@ if __name__ == "__main__":
     with open("test.bon", "wb+") as file:
         binary_file = BinaryFile(file)
         binary_file.write_integer(42, 4) # écrit 42 dans le fichier (4 bytes)
-        binary_file.write_string("Hello, World!") # écrit "Hello, World!" dans le fichier
+        binary_file.write_string("Hello") # écrit "Hello, World!" dans le fichier
         print(binary_file.read_intiger(4)) # doit afficher 42
         print(binary_file.read_string()) # doit afficher "Hello, World!"

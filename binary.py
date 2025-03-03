@@ -1,5 +1,6 @@
 import io
 from typing import BinaryIO
+from enum import Enum
 
 class BinaryFile:
 
@@ -59,7 +60,7 @@ class BinaryFile:
         """
         current = self.file.tell() # sauvegarde la position actuelle
         self.goto(pos) # se déplace à la position donnée
-        bytes_written = self.write_intiger(n, size) # écrit l'entier
+        bytes_written = self.write_integer(n, size) # écrit l'entier
         self.file.seek(current) # retourne à la position actuelle
         return bytes_written
     
@@ -91,7 +92,7 @@ class BinaryFile:
         return bytes_written # retourne le nb total de bytes écrits
     
     # Méthodes pour pouvoir lire les valeurs écrites
-    def read_intiger(self, size : int) -> int:
+    def read_integer(self, size : int) -> int:
         """
         Lit un int depuis un fichier
         size est le nombre de bytes à lire
@@ -100,7 +101,7 @@ class BinaryFile:
         data = self.file.read(size) # lit les bytes
         return int.from_bytes(data, byteorder='little', signed=True) # convertit les bytes en int
     
-    def read_intiger_from(self, size: int, pos: int) -> int:
+    def read_integer_from(self, size: int, pos: int) -> int:
         """
         Lit un int à une position donnée dans le fichier
         size est le nombre de bytes à lire
@@ -109,7 +110,7 @@ class BinaryFile:
         """
         current = self.file.tell() # sauvegarde la position actuelle
         self.goto(pos) # se déplace à la position donnée
-        value = self.read_intiger(size) # lit l'entier
+        value = self.read_integer(size) # lit l'entier
         self.file.seek(current) # retourne à la position actuelle
         return value # retourne l'entier
 
@@ -118,7 +119,7 @@ class BinaryFile:
         Lit un str depuis un fichier
         Retourne le str lu
         """
-        length = self.read_intiger(2) # lit la longueur du str (2 bytes)
+        length = self.read_integer(2) # lit la longueur du str (2 bytes)
         data = self.file.read(length) # lit le str
         return data.decode('utf-8') # convertit les bytes en str
 
@@ -135,11 +136,14 @@ class BinaryFile:
         return value
     
 
+
+
+
 # Test de la classe BinaryFile
 if __name__ == "__main__":
-    with open("test.bon", "wb+") as file:
+    with open("test.bin", "wb+") as file:
         binary_file = BinaryFile(file)
         binary_file.write_integer(42, 4) # écrit 42 dans le fichier (4 bytes)
-        binary_file.write_string("Hello") # écrit "Hello, World!" dans le fichier
-        print(binary_file.read_intiger(4)) # doit afficher 42
+        binary_file.write_string("Hello, World!") # écrit "Hello, World!" dans le fichier
+        print(binary_file.read_integer(4)) # doit afficher 42
         print(binary_file.read_string()) # doit afficher "Hello, World!"

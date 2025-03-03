@@ -1,6 +1,6 @@
-import io
-from typing import BinaryIO
-from enum import Enum
+import io # module pour les opérations d'entrée/sortie
+from typing import BinaryIO # module pour les types de données binaires
+from enum import Enum # module pour les enums
 
 class BinaryFile:
 
@@ -135,10 +135,6 @@ class BinaryFile:
         self.file.seek(current) # retourne à la positiion de base
         return value
     
-
-
-
-
 # Test de la classe BinaryFile
 if __name__ == "__main__":
     with open("test.bin", "wb+") as file:
